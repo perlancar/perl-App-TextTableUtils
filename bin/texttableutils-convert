@@ -26,6 +26,7 @@ my $rows;
 # parse input into rows
 {
     if ($ifmt eq 'csv') {
+        require Text::CSV;
         my $csv = Text::CSV->new({ binary => 1 })
             or die "Cannot use CSV: ".Text::CSV->error_diag;
         $rows = [];
