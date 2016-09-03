@@ -80,6 +80,11 @@ my $rows;
         require Text::Table::CSV;
         print Text::Table::Any::table(
             rows => $rows, backend => 'Text::Table::CSV');
+    } elsif ($ofmt eq 'ansitable') {
+        require Text::Table::Any;
+        require Text::ANSITable;
+        print Text::Table::Any::table(
+            rows => $rows, backend => 'Text::ANSITable');
     } elsif ($ofmt eq 'asciitable') {
         require Text::Table::Any;
         require Text::ASCIITable;
