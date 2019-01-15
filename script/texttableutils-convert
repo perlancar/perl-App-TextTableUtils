@@ -130,7 +130,7 @@ my $rows;
     }
 }
 
-# ABSTRACT: Convert/render {CSV,JSON/Perl array-of-arrays} into {CSV/JSON/Perl/text tables}
+# ABSTRACT: Convert/render {CSV,TSV,JSON/Perl array-of-arrays} into {CSV/TSV/JSON/Perl/text tables}
 # PODNAME:
 
 =head1 SYNOPSIS
