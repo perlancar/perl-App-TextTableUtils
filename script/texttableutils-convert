@@ -9,8 +9,18 @@ use warnings;
 
 my ($ifmt, $ofmt) = $0 =~ /(\w+)2(\w+)\z/ or die "Please call me as <foo>2<bar> (not $0)";
 
-my $fh;
+# parse options
+my %Opts;
+{
+    require Getopt::Long;
+    Getopt::Long::Configure("bundling", "no_ignore_case", "permute", "no_getopt_compat");
+    Getopt::Long::GetOptions(
+        "backend|b=s" => \$Opts{backend},
+    ) or die "$0: Error in getting options, bailing out\n";
+}
+
 # get input handle
+my $fh;
 {
     if (@ARGV == 1) {
         open $fh, "<:encoding(utf8)", $ARGV[0] or die "Can't open $ARGV[0]: $!";
@@ -34,6 +44,12 @@ my $rows;
             push @$rows, $row;
         }
         $csv->eof or $csv->error_diag();
+    } elsif ($ifmt eq 'tsv') {
+        $rows = [];
+        while (my $row = <$fh>) {
+            chomp $row;
+            push @$rows, [split /\t/, $row];
+        }
     } elsif ($ifmt eq 'json') {
         require Data::Check::Structure;
         require JSON::MaybeXS;
@@ -75,11 +91,20 @@ my $rows;
             ($_ == $#{$rows} ? "" : ","), "\n";
         }
         print "]\n";
+    } elsif ($ofmt eq 'texttable') {
+        require Text::Table::Any;
+        print Text::Table::Any::table(
+            rows => $rows, backend => $Opts{backend});
     } elsif ($ofmt eq 'csv') {
         require Text::Table::Any;
         require Text::Table::CSV;
         print Text::Table::Any::table(
             rows => $rows, backend => 'Text::Table::CSV');
+    } elsif ($ofmt eq 'tsv') {
+        require Text::Table::Any;
+        require Text::Table::TSV;
+        print Text::Table::Any::table(
+            rows => $rows, backend => 'Text::Table::TSV');
     } elsif ($ofmt eq 'ansitable') {
         require Text::Table::Any;
         require Text::ANSITable;
@@ -110,15 +135,23 @@ my $rows;
 
 =head1 SYNOPSIS
 
-A couple of examples. To render CSV as Org table:
+The distribution App-TextTableUtils provides the following CLIs:
+
+#INSERT_EXECS_LIST
+
+Some examples for using the scripts:
+
+To render CSV as Org table:
 
  % csv2orgtable TABLE.CSV
 
-To render CSV as Markdown table:
+To render CSV as JSON:
 
- % csv2mdtable < TABLE.CSV
+ % csv2json < TABLE.CSV
 
-Also see the other scripts.
+To render TSV as a text table (using L<Text::Table::Any>) with LTSV backend:
+
+ % echo "SELECT * FROM table1" | mysql DBNAME | tsv2texttable -b Text::Table::LTSV
 
 
 =head1 SEE ALSO
