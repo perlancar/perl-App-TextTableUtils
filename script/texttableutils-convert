@@ -154,6 +154,14 @@ To render TSV as a text table (using L<Text::Table::Any>) with LTSV backend:
  % echo "SELECT * FROM table1" | mysql DBNAME | tsv2texttable -b Text::Table::LTSV
 
 
+=head1 OPTIONS
+
+=head2 --backend (-b)
+
+Select L<Text::Table::Any> backend to use. Only for texttable output
+(C<*2texttable> scripts).
+
+
 =head1 SEE ALSO
 
 L<App::texttable>, L<texttable>
