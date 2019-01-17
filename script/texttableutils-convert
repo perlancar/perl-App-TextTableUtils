@@ -126,37 +126,37 @@ if ($Opts{transpose}) {
     } elsif ($ofmt eq 'texttable') {
         require Text::Table::Any;
         print Text::Table::Any::table(
-            rows => $rows, backend => $Opts{backend});
+            rows => $rows, header_row=>0, backend => $Opts{backend});
     } elsif ($ofmt eq 'csv') {
         require Text::Table::Any;
         require Text::Table::CSV;
         print Text::Table::Any::table(
-            rows => $rows, backend => 'Text::Table::CSV');
+            rows => $rows, header_row=>0, backend => 'Text::Table::CSV');
     } elsif ($ofmt eq 'tsv') {
         require Text::Table::Any;
         require Text::Table::TSV;
         print Text::Table::Any::table(
-            rows => $rows, backend => 'Text::Table::TSV');
+            rows => $rows, header_row=>0, backend => 'Text::Table::TSV');
     } elsif ($ofmt eq 'ansitable') {
         require Text::Table::Any;
         require Text::ANSITable;
         print Text::Table::Any::table(
-            rows => $rows, backend => 'Text::ANSITable');
+            rows => $rows, header_row=>0, backend => 'Text::ANSITable');
     } elsif ($ofmt eq 'asciitable') {
         require Text::Table::Any;
         require Text::ASCIITable;
         print Text::Table::Any::table(
-            rows => $rows, backend => 'Text::ASCIITable');
+            rows => $rows, header_row=>0, backend => 'Text::ASCIITable');
     } elsif ($ofmt eq 'mdtable') {
         require Text::Table::Any;
         require Text::MarkdownTable;
         print Text::Table::Any::table(
-            rows => $rows, backend => 'Text::MarkdownTable');
+            rows => $rows, header_row=>0, backend => 'Text::MarkdownTable');
     } elsif ($ofmt eq 'orgtable') {
         require Text::Table::Any;
         require Text::Table::Org;
         print Text::Table::Any::table(
-            rows => $rows, backend => 'Text::Table::Org');
+            rows => $rows, header_row=>0, backend => 'Text::Table::Org');
     } else {
         die "Unknown output format '$ofmt'";
     }
