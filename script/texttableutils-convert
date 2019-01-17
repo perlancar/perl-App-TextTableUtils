@@ -16,6 +16,7 @@ my %Opts;
     Getopt::Long::Configure("bundling", "no_ignore_case", "permute", "no_getopt_compat");
     Getopt::Long::GetOptions(
         "backend|b=s" => \$Opts{backend},
+        "transpose|t" => \$Opts{transpose},
     ) or die "$0: Error in getting options, bailing out\n";
 }
 
@@ -86,6 +87,18 @@ my $rows;
     } else {
         die "Unknown input format '$ifmt'";
     }
+}
+
+# optionally transpose
+if ($Opts{transpose}) {
+    my $new_rows = [];
+    for my $i (0..$#{$rows}) {
+        my $row = $rows->[$i];
+        for my $j (0..$#{$row}) {
+            $new_rows->[$j][$i] = $row->[$j];
+        }
+    }
+    $rows = $new_rows;
 }
 
 # format as output
@@ -180,6 +193,10 @@ To render TSV as a text table (using L<Text::Table::Any>) with LTSV backend:
 Only for texttable output (C<*2texttable> scripts).
 
 Select L<Text::Table::Any> backend to use.
+
+=head2 --transpose (-t)
+
+Transpose table prior to output.
 
 
 =head1 SEE ALSO
