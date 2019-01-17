@@ -50,6 +50,25 @@ my $rows;
             chomp $row;
             push @$rows, [split /\t/, $row];
         }
+    } elsif ($ifmt eq 'ini' || $ifmt eq 'iod') {
+        my $reader;
+        if ($ifmt eq 'ini') {
+            require Config::IOD::INI::Reader;
+            $reader = Config::IOD::INI::Reader->new;
+        } else {
+            require Config::IOD::Reader;
+            $reader = Config::IOD::Reader->new;
+        }
+        my $content = do { local $/; scalar <$fh> };
+        my $hoh = $reader->read_string($content);
+        $rows = [];
+        for my $section (sort keys %$hoh) {
+            my $hash = $hoh->{$section};
+            for my $key (sort keys %$hash) {
+                push @$rows, [$key, $hash->{$key}];
+            }
+        }
+
     } elsif ($ifmt eq 'json') {
         require Data::Check::Structure;
         require JSON::MaybeXS;
@@ -130,7 +149,7 @@ my $rows;
     }
 }
 
-# ABSTRACT: Convert/render {CSV,TSV,JSON/Perl array-of-arrays} into {CSV/TSV/JSON/Perl/text tables}
+# ABSTRACT: Convert/render {CSV,TSV,INI,IOD,JSON/Perl array-of-arrays} into {CSV/TSV/JSON/Perl/text tables}
 # PODNAME:
 
 =head1 SYNOPSIS
@@ -158,8 +177,9 @@ To render TSV as a text table (using L<Text::Table::Any>) with LTSV backend:
 
 =head2 --backend (-b)
 
-Select L<Text::Table::Any> backend to use. Only for texttable output
-(C<*2texttable> scripts).
+Only for texttable output (C<*2texttable> scripts).
+
+Select L<Text::Table::Any> backend to use.
 
 
 =head1 SEE ALSO
