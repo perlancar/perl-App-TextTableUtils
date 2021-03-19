@@ -1,3 +1,12 @@
+0.006   2021-03-20  Released-By: PERLANCAR; Urgency: medium
+
+	- Add command line options --csv-sep & --csv-loose for CSV input files
+	  which are then passed along to Text::CSV. The two options allow to
+	  specify the separator character(s) in the CSV file (--csv-sep ";", -s)
+	  and to relax the CSV parsing (--csv-loose, -l). Thanks Markus Koch
+	  (GH#1).
+
+
 0.005   2019-05-12  Released-By: PERLANCAR
 
 	- [Removed] Remove tsv2csv, csv2tsv; we'll use the line-by-line
