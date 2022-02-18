@@ -1,6 +1,10 @@
 package App::TextTableUtils;
 
+use strict;
+
+# AUTHORITY
 # DATE
+# DIST
 # VERSION
 
 1;

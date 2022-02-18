@@ -1,11 +1,13 @@
 #!perl
 
-# DATE
-# VERSION
-
 use 5.010001;
 use strict;
 use warnings;
+
+# AUTHORITY
+# DATE
+# DIST
+# VERSION
 
 my ($ifmt, $ofmt) = $0 =~ /(\w+)2(\w+)\z/ or die "Please call me as <foo>2<bar> (not $0)";
 
@@ -92,7 +94,7 @@ my $rows;
     } elsif ($ifmt eq 'dd') {
         require Data::Check::Structure;
         local $/;
-        $rows = eval scalar <$fh>;
+        $rows = eval scalar <$fh>; ## no critic: BuiltinFunctions::ProhibitStringyEval
         die if $@;
         die "Input data is not an array-of-arrays-of scalars"
             unless Data::Check::Structure::is_aoaos($rows);
