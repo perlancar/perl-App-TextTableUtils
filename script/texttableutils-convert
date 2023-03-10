@@ -145,7 +145,7 @@ if ($Opts{transpose}) {
     } elsif ($ofmt eq 'texttable') {
         require Text::Table::Any;
         print Text::Table::Any::table(
-            rows => $rows, header_row=>0, backend => $Opts{backend});
+            rows => $rows, header_row=>1, backend => $Opts{backend});
     } elsif ($ofmt eq 'csv') {
         require Text::Table::Any;
         require Text::Table::CSV;
@@ -160,7 +160,7 @@ if ($Opts{transpose}) {
         require Text::Table::Any;
         require Text::ANSITable;
         print Text::Table::Any::table(
-            rows => $rows, header_row=>0, backend => 'Text::ANSITable');
+            rows => $rows, header_row=>1, backend => 'Text::ANSITable');
     } elsif ($ofmt eq 'asciitable') {
         require Text::Table::Any;
         require Text::ASCIITable;
@@ -175,7 +175,7 @@ if ($Opts{transpose}) {
         require Text::Table::Any;
         require Text::Table::Org;
         print Text::Table::Any::table(
-            rows => $rows, header_row=>0, backend => 'Text::Table::Org');
+            rows => $rows, header_row=>1, backend => 'Text::Table::Org');
     } else {
         die "Unknown output format '$ofmt'";
     }
