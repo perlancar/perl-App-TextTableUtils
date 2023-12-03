@@ -20,8 +20,8 @@ my %Opts;
         "backend|b=s" => \$Opts{backend},
         "transpose|t" => \$Opts{transpose},
         "csv-sep|s=s" => \$Opts{csv_sep},
-        "csv-quote|s=s" => \$Opts{csv_quote},
-        "csv-escape|s=s" => \$Opts{csv_escape},
+        "csv-quote|q=s" => \$Opts{csv_quote},
+        "csv-escape|e=s" => \$Opts{csv_escape},
         "csv-loose|l" => \$Opts{csv_loose}
     ) or die "$0: Error in getting options, bailing out\n";
 }
